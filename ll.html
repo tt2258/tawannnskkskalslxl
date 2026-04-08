@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>เพื่อนใหม่ PSRU | แนะนำตัว</title>
+    <title>แนะนำตัวให้ตะวันรู้จักหน่อยย | เพื่อนใหม่ PSRU</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- QR Code Library -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
         * {
@@ -18,342 +17,254 @@
         }
 
         body {
-            font-family: 'Prompt', 'Sarabun', sans-serif;
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
-            position: relative;
         }
 
-        /* เอฟเฟกต์แสงอลังการ */
-        .glow-1 {
-            position: fixed;
-            top: -20%;
-            left: -10%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(circle, rgba(255, 100, 150, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(60px);
-            animation: floatGlow 12s infinite alternate;
-            z-index: 0;
-        }
-
-        .glow-2 {
-            position: fixed;
-            bottom: -20%;
-            right: -10%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(circle, rgba(100, 150, 255, 0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            filter: blur(60px);
-            animation: floatGlow2 15s infinite alternate;
-            z-index: 0;
-        }
-
-        @keyframes floatGlow {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
-            100% { transform: translate(10%, 10%) scale(1.2); opacity: 0.7; }
-        }
-
-        @keyframes floatGlow2 {
-            0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-            100% { transform: translate(-10%, -10%) scale(1.3); opacity: 0.6; }
-        }
-
-        /* ลายเส้นหรู */
-        .bg-pattern {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 2px, transparent 2px, transparent 8px);
-            pointer-events: none;
-            z-index: 1;
-        }
-
+        /* พื้นหลังเรียบง่าย ไม่มีเอฟเฟกต์หนัก */
         .container {
             max-width: 1200px;
             width: 100%;
             position: relative;
-            z-index: 10;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 30px;
+            gap: 25px;
             align-items: start;
         }
 
         @media (max-width: 900px) {
             .container {
                 grid-template-columns: 1fr;
-                gap: 25px;
+                gap: 20px;
             }
         }
 
-        /* การ์ดหลัก */
+        /* การ์ด */
         .card {
-            background: rgba(20, 15, 45, 0.85);
-            backdrop-filter: blur(15px);
-            border-radius: 50px 30px 50px 30px;
-            padding: 45px 40px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1) inset;
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-            border: 1px solid rgba(255, 200, 100, 0.2);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 40px 20px 40px 20px;
+            padding: 35px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
         }
 
         .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 50px 100px rgba(0,0,0,0.6), 0 0 0 2px rgba(255, 200, 100, 0.3) inset;
+            transform: translateY(-3px);
         }
 
         /* หัวข้อ */
         .header {
             text-align: center;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
         }
 
         .logo-icon {
-            background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb);
-            width: 90px;
-            height: 90px;
-            border-radius: 30px;
+            background: linear-gradient(135deg, #ff8c5a, #ff4757);
+            width: 75px;
+            height: 75px;
+            border-radius: 25px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
-            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
-            animation: borderPulse 3s infinite;
-        }
-
-        @keyframes borderPulse {
-            0%, 100% { box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4); }
-            50% { box-shadow: 0 15px 50px rgba(255, 200, 100, 0.8); }
+            margin: 0 auto 18px;
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.3);
         }
 
         .logo-icon i {
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             color: white;
-            text-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
 
         .header h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffd89b, #ff6b6b, #48dbfb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-            text-shadow: 0 0 30px rgba(255, 200, 100, 0.3);
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e66;
+            letter-spacing: 1px;
         }
 
         .header p {
-            color: rgba(255,255,255,0.7);
-            margin-top: 10px;
-            font-size: 1rem;
+            color: #7f8c8d;
+            margin-top: 8px;
+            font-size: 0.95rem;
         }
 
         /* ฟอร์ม */
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .form-group label {
             display: block;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            color: rgba(255,255,255,0.9);
-            margin-bottom: 10px;
+            color: #2c3e66;
+            margin-bottom: 8px;
         }
 
         .form-group label i {
-            color: #feca57;
-            margin-right: 10px;
-            width: 25px;
+            color: #ff4757;
+            margin-right: 8px;
+            width: 22px;
         }
 
         .form-group input {
             width: 100%;
-            padding: 16px 20px;
+            padding: 14px 18px;
             font-size: 1rem;
-            border: 2px solid rgba(255,255,255,0.2);
-            border-radius: 30px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
             font-family: 'Prompt', sans-serif;
-            transition: all 0.3s;
-            background: rgba(255,255,255,0.1);
-            color: white;
+            transition: all 0.2s;
+            background: #fafafa;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #feca57;
-            background: rgba(255,255,255,0.2);
-            box-shadow: 0 0 20px rgba(254, 202, 87, 0.3);
-        }
-
-        .form-group input::placeholder {
-            color: rgba(255,255,255,0.4);
+            border-color: #ff8c5a;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(255, 140, 90, 0.1);
         }
 
         /* ปุ่มส่ง */
         .btn-submit {
             width: 100%;
-            padding: 18px;
-            background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb);
+            padding: 15px;
+            background: linear-gradient(135deg, #ff8c5a, #ff4757);
             border: none;
-            color: #1a0f2e;
-            font-size: 1.3rem;
-            font-weight: 800;
-            border-radius: 60px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 15px;
+            transition: all 0.2s;
+            margin-top: 10px;
             font-family: 'Prompt', sans-serif;
-            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
-            letter-spacing: 1px;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.6);
+            box-shadow: 0 5px 15px rgba(255, 71, 87, 0.3);
         }
 
         .btn-submit:active {
-            transform: translateY(0);
+            transform: translateY(2px);
+            box-shadow: 0 2px 8px rgba(255, 71, 87, 0.3);
         }
 
         .btn-submit i {
-            margin-right: 12px;
+            margin-right: 10px;
         }
 
         /* ส่วนพัฒนาโดย */
         .developer {
             text-align: center;
-            margin-top: 30px;
-            padding-top: 25px;
-            border-top: 2px dashed rgba(255, 200, 100, 0.3);
-            color: rgba(255,255,255,0.6);
-            font-size: 1rem;
-        }
-
-        .developer span {
-            background: linear-gradient(135deg, #ffd89b, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        .developer i {
-            color: #ff6b6b;
-            margin: 0 5px;
-        }
-
-        .ig-link {
-            margin-top: 10px;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px dashed #e0e0e0;
+            color: #7f8c8d;
             font-size: 0.9rem;
         }
 
+        .developer span {
+            color: #ff4757;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .developer i {
+            color: #ff4757;
+            margin: 0 3px;
+        }
+
+        .ig-link {
+            margin-top: 8px;
+            font-size: 0.85rem;
+        }
+
         .ig-link a {
-            color: #48dbfb;
+            color: #e1306c;
             text-decoration: none;
         }
 
         /* QR Code Card */
         .qrcard {
-            background: rgba(20, 15, 45, 0.85);
-            backdrop-filter: blur(15px);
-            border-radius: 50px 30px 50px 30px;
-            padding: 40px;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1) inset;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 40px 20px 40px 20px;
+            padding: 35px 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
             text-align: center;
-            transition: transform 0.4s ease;
-            border: 1px solid rgba(255, 200, 100, 0.2);
-        }
-
-        .qrcard:hover {
-            transform: translateY(-5px);
         }
 
         .qrcard h3 {
-            font-size: 1.8rem;
-            color: #feca57;
-            margin-bottom: 15px;
+            font-size: 1.6rem;
+            color: #2c3e66;
+            margin-bottom: 12px;
         }
 
         .qrcard p {
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 25px;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
         }
 
         #qrcode {
             display: flex;
             justify-content: center;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         #qrcode img, #qrcode canvas {
-            border-radius: 25px;
-            padding: 15px;
+            border-radius: 20px;
+            padding: 12px;
             background: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .qr-note {
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.5);
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #95a5a6;
         }
 
         .qr-note i {
-            color: #48dbfb;
+            color: #ff4757;
         }
 
         /* Responsive */
         @media (max-width: 550px) {
             .card, .qrcard {
-                padding: 30px 25px;
+                padding: 25px 20px;
             }
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.6rem;
             }
             .logo-icon {
-                width: 70px;
-                height: 70px;
+                width: 60px;
+                height: 60px;
             }
             .logo-icon i {
-                font-size: 2.5rem;
+                font-size: 2.2rem;
             }
             .btn-submit {
-                font-size: 1.1rem;
-                padding: 15px;
+                font-size: 1rem;
+                padding: 13px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="glow-1"></div>
-    <div class="glow-2"></div>
-    <div class="bg-pattern"></div>
-
     <div class="container">
         <!-- ฟอร์มแนะนำตัว -->
         <div class="card">
-            <!-- สติกเกอร์ต้อนรับ -->
             <div class="header">
                 <div class="logo-icon">
-                    <i class="fas fa-user-friends"></i>
+                    <i class="fas fa-user-plus"></i>
                 </div>
-                <h1>เพื่อนใหม่ PSRU</h1>
-                <p>มาแนะนำตัวกันเถอะครับ !</p>
+                <h1>แนะนำตัวให้ตะวันรู้จักหน่อยย</h1>
+                <p>มาเป็นเพื่อนใหม่กันเถอะครับ !</p>
             </div>
 
-            <!-- ฟอร์ม -->
             <form id="introForm" onsubmit="sendToEmail(event)">
                 <div class="form-group">
                     <label><i class="fas fa-user"></i> ชื่อเล่น</label>
@@ -375,7 +286,6 @@
                 </button>
             </form>
 
-            <!-- พัฒนาโดย -->
             <div class="developer">
                 <i class="fas fa-crown"></i> พัฒนาโดย 
                 <span>ตะวัน</span> เองจ้าาา 
@@ -389,7 +299,7 @@
         <!-- QR Code Card -->
         <div class="qrcard">
             <h3><i class="fas fa-qrcode"></i> สแกนเลย!</h3>
-            <p>เพื่อนๆ สแกน QR Code นี้<br>เพื่อเปิดเว็บแนะนำตัวได้เลยครับ</p>
+            <p>สแกน QR Code นี้<br>เพื่อเปิดเว็บแนะนำตัวได้เลยครับ</p>
             <div id="qrcode"></div>
             <div class="qr-note">
                 <i class="fas fa-mobile-alt"></i> ใช้กล้องมือถือสแกน หรือแชร์ให้เพื่อนครับ
@@ -398,58 +308,58 @@
     </div>
 
     <script>
-        // สร้าง QR Code (ลิงก์ของเว็บปัจจุบัน)
+        // สร้าง QR Code
         function generateQRCode() {
             const currentUrl = window.location.href;
             const qrcodeContainer = document.getElementById('qrcode');
             
-            // ล้าง container ก่อน
-            qrcodeContainer.innerHTML = '';
-            
-            // สร้าง QR Code
-            new QRCode(qrcodeContainer, {
-                text: currentUrl,
-                width: 200,
-                height: 200,
-                colorDark: "#1a0f2e",
-                colorLight: "#ffffff",
-                correctLevel: QRCode.CorrectLevel.H
-            });
+            if (qrcodeContainer) {
+                qrcodeContainer.innerHTML = '';
+                
+                try {
+                    new QRCode(qrcodeContainer, {
+                        text: currentUrl,
+                        width: 180,
+                        height: 180,
+                        colorDark: "#2c3e66",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.M
+                    });
+                } catch(e) {
+                    console.log("QR Code error:", e);
+                }
+            }
         }
 
-        // ฟังก์ชันส่งอีเมล (ภาษาผู้ชาย)
+        // ฟังก์ชันส่งอีเมล
         function sendToEmail(event) {
             event.preventDefault();
 
-            // รับค่าจากฟอร์ม
             const nickname = document.getElementById('nickname').value.trim();
             const age = document.getElementById('age').value.trim();
             const faculty = document.getElementById('faculty').value.trim();
 
-            // ตรวจสอบ
             if (!nickname) {
-                alert('กรุณากรอกชื่อเล่นของคุณด้วยครับ 🧑');
+                alert('กรุณากรอกชื่อเล่นของคุณด้วยครับ');
                 return;
             }
             if (!age || age < 15 || age > 60) {
-                alert('กรุณากรอกอายุให้ถูกต้องนะครับ (15-60 ปี) 🎂');
+                alert('กรุณากรอกอายุให้ถูกต้องนะครับ (15-60 ปี)');
                 return;
             }
             if (!faculty) {
-                alert('กรุณากรอกคณะของคุณด้วยครับ 🏫');
+                alert('กรุณากรอกคณะของคุณด้วยครับ');
                 return;
             }
 
-            // วันที่และเวลา
             const now = new Date();
             const thaiDate = now.toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
 
-            // สร้างข้อความอีเมล (ภาษาผู้ชาย)
-            const subject = `📌 เพื่อนใหม่ PSRU - ${nickname} แนะนำตัว`;
+            const subject = `📌 แนะนำตัวให้ตะวันรู้จัก - ${nickname}`;
             
             const body = `
 ═══════════════════════════════════
-          🔥 เพื่อนใหม่ PSRU 🔥
+          สวัสดีครับตะวัน 👋
 ═══════════════════════════════════
 
 👤 ชื่อเล่น: ${nickname}
@@ -461,26 +371,23 @@
 ───────────────────────────────
 
 💬 ข้อความจาก ${nickname}:
-"หวัดดีครับทุกคน ยินดีที่ได้รู้จัก
- หวังว่าจะได้เป็นเพื่อนใหม่ที่ดีต่อกันครับ 💪"
+"หวัดดีครับตะวัน ยินดีที่ได้รู้จัก
+ หวังว่าจะได้เป็นเพื่อนกันนะครับ"
 
 ═══════════════════════════════════
    ขอบคุณที่แนะนำตัวนะครับ 
-   เดี๋ยวมีคนแอดไปคุยด้วยจ้า
 ═══════════════════════════════════
             `.trim();
 
-            // เปิด mailto
             const mailtoLink = `mailto:mlllsdjsmsms@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
             window.location.href = mailtoLink;
 
-            // แจ้งเตือน
             setTimeout(() => {
-                alert('✨ เปิดหน้าต่างอีเมลแล้วครับ ✨\n\nกรุณากดส่งอีกครั้งในหน้าต่างอีเมลนะครับ\nแล้วเราจะได้เป็นเพื่อนใหม่กัน 💙');
-            }, 500);
+                alert('✨ เปิดหน้าต่างอีเมลแล้วครับ ✨\n\nกรุณากดส่งอีกครั้งในหน้าต่างอีเมลนะครับ');
+            }, 300);
         }
 
-        // สร้าง QR Code เมื่อโหลดหน้าเว็บ
+        // โหลด QR Code เมื่อหน้าเว็บพร้อม
         window.onload = function() {
             generateQRCode();
         };
