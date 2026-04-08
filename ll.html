@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -17,7 +19,7 @@
 
         body {
             font-family: 'Prompt', 'Sarabun', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -26,34 +28,88 @@
             position: relative;
         }
 
-        /* พื้นหลังลายจุดน่ารัก */
+        /* เอฟเฟกต์แสงอลังการ */
+        .glow-1 {
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(255, 100, 150, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: floatGlow 12s infinite alternate;
+            z-index: 0;
+        }
+
+        .glow-2 {
+            position: fixed;
+            bottom: -20%;
+            right: -10%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(100, 150, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: floatGlow2 15s infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+            100% { transform: translate(10%, 10%) scale(1.2); opacity: 0.7; }
+        }
+
+        @keyframes floatGlow2 {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+            100% { transform: translate(-10%, -10%) scale(1.3); opacity: 0.6; }
+        }
+
+        /* ลายเส้นหรู */
         .bg-pattern {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 0%, transparent 20%),
-                              radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 25%);
+            background-image: 
+                repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 2px, transparent 2px, transparent 8px);
             pointer-events: none;
             z-index: 1;
         }
 
         .container {
-            max-width: 550px;
+            max-width: 1200px;
             width: 100%;
             position: relative;
             z-index: 10;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
         }
 
         /* การ์ดหลัก */
         .card {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-radius: 60px 30px 60px 30px;
-            padding: 40px 35px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.3) inset;
-            transition: transform 0.3s ease;
+            background: rgba(20, 15, 45, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 50px 30px 50px 30px;
+            padding: 45px 40px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1) inset;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 1px solid rgba(255, 200, 100, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.6), 0 0 0 2px rgba(255, 200, 100, 0.3) inset;
         }
 
         /* หัวข้อ */
@@ -63,49 +119,374 @@
         }
 
         .logo-icon {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            width: 80px;
-            height: 80px;
+            background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb);
+            width: 90px;
+            height: 90px;
             border-radius: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto 20px;
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+            animation: borderPulse 3s infinite;
+        }
+
+        @keyframes borderPulse {
+            0%, 100% { box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4); }
+            50% { box-shadow: 0 15px 50px rgba(255, 200, 100, 0.8); }
         }
 
         .logo-icon i {
-            font-size: 3rem;
+            font-size: 3.5rem;
             color: white;
+            text-shadow: 0 0 20px rgba(0,0,0,0.3);
         }
 
         .header h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffd89b, #ff6b6b, #48dbfb);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 30px rgba(255, 200, 100, 0.3);
         }
 
         .header p {
-            color: #888;
-            margin-top: 8px;
-            font-size: 0.95rem;
+            color: rgba(255,255,255,0.7);
+            margin-top: 10px;
+            font-size: 1rem;
         }
 
         /* ฟอร์ม */
         .form-group {
-            margin-bottom: 22px;
+            margin-bottom: 25px;
         }
 
         .form-group label {
             display: block;
-            font-size: 0.95rem;
+            font-size: 1rem;
             font-weight: 600;
-            color: #555;
-            margin-bottom: 8px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 10px;
         }
+
+        .form-group label i {
+            color: #feca57;
+            margin-right: 10px;
+            width: 25px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 1rem;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 30px;
+            font-family: 'Prompt', sans-serif;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #feca57;
+            background: rgba(255,255,255,0.2);
+            box-shadow: 0 0 20px rgba(254, 202, 87, 0.3);
+        }
+
+        .form-group input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ปุ่มส่ง */
+        .btn-submit {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb);
+            border: none;
+            color: #1a0f2e;
+            font-size: 1.3rem;
+            font-weight: 800;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 15px;
+            font-family: 'Prompt', sans-serif;
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.6);
+        }
+
+        .btn-submit:active {
+            transform: translateY(0);
+        }
+
+        .btn-submit i {
+            margin-right: 12px;
+        }
+
+        /* ส่วนพัฒนาโดย */
+        .developer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 2px dashed rgba(255, 200, 100, 0.3);
+            color: rgba(255,255,255,0.6);
+            font-size: 1rem;
+        }
+
+        .developer span {
+            background: linear-gradient(135deg, #ffd89b, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .developer i {
+            color: #ff6b6b;
+            margin: 0 5px;
+        }
+
+        .ig-link {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .ig-link a {
+            color: #48dbfb;
+            text-decoration: none;
+        }
+
+        /* QR Code Card */
+        .qrcard {
+            background: rgba(20, 15, 45, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 50px 30px 50px 30px;
+            padding: 40px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.1) inset;
+            text-align: center;
+            transition: transform 0.4s ease;
+            border: 1px solid rgba(255, 200, 100, 0.2);
+        }
+
+        .qrcard:hover {
+            transform: translateY(-5px);
+        }
+
+        .qrcard h3 {
+            font-size: 1.8rem;
+            color: #feca57;
+            margin-bottom: 15px;
+        }
+
+        .qrcard p {
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 25px;
+        }
+
+        #qrcode {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        #qrcode img, #qrcode canvas {
+            border-radius: 25px;
+            padding: 15px;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .qr-note {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .qr-note i {
+            color: #48dbfb;
+        }
+
+        /* Responsive */
+        @media (max-width: 550px) {
+            .card, .qrcard {
+                padding: 30px 25px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+            .logo-icon {
+                width: 70px;
+                height: 70px;
+            }
+            .logo-icon i {
+                font-size: 2.5rem;
+            }
+            .btn-submit {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-1"></div>
+    <div class="glow-2"></div>
+    <div class="bg-pattern"></div>
+
+    <div class="container">
+        <!-- ฟอร์มแนะนำตัว -->
+        <div class="card">
+            <!-- สติกเกอร์ต้อนรับ -->
+            <div class="header">
+                <div class="logo-icon">
+                    <i class="fas fa-user-friends"></i>
+                </div>
+                <h1>เพื่อนใหม่ PSRU</h1>
+                <p>มาแนะนำตัวกันเถอะครับ !</p>
+            </div>
+
+            <!-- ฟอร์ม -->
+            <form id="introForm" onsubmit="sendToEmail(event)">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> ชื่อเล่น</label>
+                    <input type="text" id="nickname" placeholder="เช่น มาร์ค, ไททัน, เฟิร์ส" required autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-alt"></i> อายุ</label>
+                    <input type="number" id="age" placeholder="อายุเท่าไหร่ครับ" min="15" max="60" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-university"></i> คณะ</label>
+                    <input type="text" id="faculty" placeholder="เช่น คณะวิทยาการจัดการ, คณะครุศาสตร์" required autocomplete="off">
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-paper-plane"></i> ส่งคำแนะนำตัว
+                </button>
+            </form>
+
+            <!-- พัฒนาโดย -->
+            <div class="developer">
+                <i class="fas fa-crown"></i> พัฒนาโดย 
+                <span>ตะวัน</span> เองจ้าาา 
+                <i class="fas fa-heart"></i>
+                <div class="ig-link">
+                    <i class="fab fa-instagram"></i> <a href="https://instagram.com/ttttt___998on" target="_blank">ttttt___998on</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- QR Code Card -->
+        <div class="qrcard">
+            <h3><i class="fas fa-qrcode"></i> สแกนเลย!</h3>
+            <p>เพื่อนๆ สแกน QR Code นี้<br>เพื่อเปิดเว็บแนะนำตัวได้เลยครับ</p>
+            <div id="qrcode"></div>
+            <div class="qr-note">
+                <i class="fas fa-mobile-alt"></i> ใช้กล้องมือถือสแกน หรือแชร์ให้เพื่อนครับ
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // สร้าง QR Code (ลิงก์ของเว็บปัจจุบัน)
+        function generateQRCode() {
+            const currentUrl = window.location.href;
+            const qrcodeContainer = document.getElementById('qrcode');
+            
+            // ล้าง container ก่อน
+            qrcodeContainer.innerHTML = '';
+            
+            // สร้าง QR Code
+            new QRCode(qrcodeContainer, {
+                text: currentUrl,
+                width: 200,
+                height: 200,
+                colorDark: "#1a0f2e",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        // ฟังก์ชันส่งอีเมล (ภาษาผู้ชาย)
+        function sendToEmail(event) {
+            event.preventDefault();
+
+            // รับค่าจากฟอร์ม
+            const nickname = document.getElementById('nickname').value.trim();
+            const age = document.getElementById('age').value.trim();
+            const faculty = document.getElementById('faculty').value.trim();
+
+            // ตรวจสอบ
+            if (!nickname) {
+                alert('กรุณากรอกชื่อเล่นของคุณด้วยครับ 🧑');
+                return;
+            }
+            if (!age || age < 15 || age > 60) {
+                alert('กรุณากรอกอายุให้ถูกต้องนะครับ (15-60 ปี) 🎂');
+                return;
+            }
+            if (!faculty) {
+                alert('กรุณากรอกคณะของคุณด้วยครับ 🏫');
+                return;
+            }
+
+            // วันที่และเวลา
+            const now = new Date();
+            const thaiDate = now.toLocaleString('th-TH', { timeZone: 'Asia/Bangkok' });
+
+            // สร้างข้อความอีเมล (ภาษาผู้ชาย)
+            const subject = `📌 เพื่อนใหม่ PSRU - ${nickname} แนะนำตัว`;
+            
+            const body = `
+═══════════════════════════════════
+          🔥 เพื่อนใหม่ PSRU 🔥
+═══════════════════════════════════
+
+👤 ชื่อเล่น: ${nickname}
+🎂 อายุ: ${age} ปี
+🏛️ คณะ: ${faculty}
+
+───────────────────────────────
+📅 ส่งเมื่อ: ${thaiDate}
+───────────────────────────────
+
+💬 ข้อความจาก ${nickname}:
+"หวัดดีครับทุกคน ยินดีที่ได้รู้จัก
+ หวังว่าจะได้เป็นเพื่อนใหม่ที่ดีต่อกันครับ 💪"
+
+═══════════════════════════════════
+   ขอบคุณที่แนะนำตัวนะครับ 
+   เดี๋ยวมีคนแอดไปคุยด้วยจ้า
+═══════════════════════════════════
+            `.trim();
+
+            // เปิด mailto
+            const mailtoLink = `mailto:mlllsdjsmsms@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            window.location.href = mailtoLink;
+
+            // แจ้งเตือน
+            setTimeout(() => {
+                alert('✨ เปิดหน้าต่างอีเมลแล้วครับ ✨\n\nกรุณากดส่งอีกครั้งในหน้าต่างอีเมลนะครับ\nแล้วเราจะได้เป็นเพื่อนใหม่กัน 💙');
+            }, 500);
+        }
+
+        // สร้าง QR Code เมื่อโหลดหน้าเว็บ
+        window.onload = function() {
+            generateQRCode();
+        };
+    </script>
+</body>
+</html>        }
 
         .form-group label i {
             color: #764ba2;
